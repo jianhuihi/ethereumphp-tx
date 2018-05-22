@@ -4,17 +4,33 @@
 
 Ethereum transaction library in PHP.
 
-# Install
+# 安装
 
 ```
-composer require web3p/ethereum-tx
+composer require jianhuihi/ethereum-tx
 ```
 
-# Usage
+
+## 依赖
+
+```
+ext-gmp: ^7.2
+ext-scrypt: ^1.4
+ext-secp256k1: ^0.1.0
+ext-keccak: ^0.2
+bitwasp/buffertools: ^0.5.0
+```
+
+* ext-scrypt: [https://github.com/DomBlack/php-scrypt](https://github.com/DomBlack/php-scrypt)
+* ext-secp256k1: [https://github.com/Bit-Wasp/secp256k1-php](https://github.com/Bit-Wasp/secp256k1-php)
+* ext-keccak: [https://github.com/EricYChu/php-keccak-hash](https://github.com/EricYChu/php-keccak-hash)
+
+
+# 使用
 
 Create a transaction:
 ```php
-use Web3p\EthereumTx\Transaction;
+use Ethereum\Transaction;
 
 // without chainId
 $transaction = new Transaction([
@@ -42,119 +58,9 @@ $transaction = new Transaction([
 
 Sign a transaction:
 ```php
-use Web3p\EthereumTx\Transaction;
+use Ethereum\Transaction;
 
 $signedTransaction = $transaction->sign('your private key');
-```
-
-# API
-
-### Web3p\EthereumTx\Transaction
-
-#### sha3
-
-Returns keccak256 encoding of given data.
-
-> It will be removed in the next version.
-
-`sha3(string $input)`
-
-String input
-
-###### Example
-
-* Encode string.
-
-```php
-use Web3p\EthereumTx\Transaction;
-
-$transaction = new Transaction([
-    'nonce' => '0x01',
-    'from' => '0xb60e8dd61c5d32be8058bb8eb970870f07233155',
-    'to' => '0xd46e8dd67c5d32be8058bb8eb970870f07244567',
-    'gas' => '0x76c0',
-    'gasPrice' => '0x9184e72a000',
-    'value' => '0x9184e72a',
-    'data' => '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675'
-]);
-$hashedString = $transaction->sha3('web3p');
-```
-
-#### serialize
-
-Returns recursive length prefix encoding of transaction data.
-
-`serialize()`
-
-###### Example
-
-* Serialize the transaction data.
-
-```php
-use Web3p\EthereumTx\Transaction;
-
-$transaction = new Transaction([
-    'nonce' => '0x01',
-    'from' => '0xb60e8dd61c5d32be8058bb8eb970870f07233155',
-    'to' => '0xd46e8dd67c5d32be8058bb8eb970870f07244567',
-    'gas' => '0x76c0',
-    'gasPrice' => '0x9184e72a000',
-    'value' => '0x9184e72a',
-    'data' => '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675'
-]);
-$serializedTx = $transaction->serialize();
-```
-
-#### sign
-
-Returns signed of transaction data.
-
-`sign(string $privateKey)`
-
-String privateKey - hexed private key with zero prefixed.
-
-###### Example
-
-* Sign the transaction data.
-
-```php
-use Web3p\EthereumTx\Transaction;
-
-$transaction = new Transaction([
-    'nonce' => '0x01',
-    'from' => '0xb60e8dd61c5d32be8058bb8eb970870f07233155',
-    'to' => '0xd46e8dd67c5d32be8058bb8eb970870f07244567',
-    'gas' => '0x76c0',
-    'gasPrice' => '0x9184e72a000',
-    'value' => '0x9184e72a',
-    'data' => '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675'
-]);
-$signedTx = $transaction->sign($stringPrivateKey);
-```
-
-#### hash
-
-Returns keccak256 encoding of serialized transaction data.
-
-`hash()`
-
-###### Example
-
-* Hash serialized transaction data.
-
-```php
-use Web3p\EthereumTx\Transaction;
-
-$transaction = new Transaction([
-    'nonce' => '0x01',
-    'from' => '0xb60e8dd61c5d32be8058bb8eb970870f07233155',
-    'to' => '0xd46e8dd67c5d32be8058bb8eb970870f07244567',
-    'gas' => '0x76c0',
-    'gasPrice' => '0x9184e72a000',
-    'value' => '0x9184e72a',
-    'data' => '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675'
-]);
-$hashedTx = $transaction->serialize();
 ```
 
 # License
