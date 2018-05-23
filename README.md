@@ -1,4 +1,4 @@
-# ethereum-tx
+# ethereumphp-tx
 Ethereum transaction library in PHP.
 
 # 安装
