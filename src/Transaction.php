@@ -95,20 +95,6 @@ class Transaction {
 	}
 
 	/**
-	 * @param Buffer $privateKey
-	 * @param Buffer $chainId (1 => mainet, 3 => robsten, 4 => rinkeby)
-	 * @return Buffer
-	 * @throws \Exception
-	 */
-	public function getRaw(Buffer $privateKey, Buffer $chainId = null): Buffer{
-		$chainId = $chainId ?? Buffer::int('1');
-		$this->chainId = $chainId;
-
-		$this->chainIdMul = Buffer::int($chainId->getInt() * 2);
-		return $this->sign($chainId, $privateKey);
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getInput(): array
@@ -126,11 +112,15 @@ class Transaction {
 	/**
 	 * @param Transaction $transaction
 	 * @param Byte $privateKey
-	 * @return Byte
+	 * @return Buffer
 	 * @throws Exception
 	 */
-	public function sign(Buffer $chainId, Buffer $privateKey): Buffer{
-		/** @var Byte $hash */
+	public function sign(Buffer $privateKey, Buffer $chainId): Buffer{
+		$chainId = $chainId ?? Buffer::int('1');
+		$this->chainId = $chainId;
+
+		$this->chainIdMul = Buffer::int($chainId->getInt() * 2);
+
 		$hash = $this->hash($chainId);
 
 		$signature = $this->signature($hash, $privateKey);

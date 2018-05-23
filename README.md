@@ -61,7 +61,7 @@ $tx = new Ethereum\Transaction(
 
 Sign a transaction:
 ```php
-$raw = $tx->getRaw($pk, $chainId);
+$raw = $tx->sign($pk, $chainId);
 
 echo "Generated raw transaction :" . PHP_EOL;
 echo $raw->getHex() . PHP_EOL;
